@@ -21,10 +21,8 @@ df_sensor = pd.read_csv('/Users/batistajunior/Heroku/Sensor_FieldPRO.csv')
 df_estacao = pd.read_csv('/Users/batistajunior/Heroku/Estacao_Convencional.csv')
 
 # Etapa 2: Verificação dos dados
-print("Dados do Sensor:")
-display(df_sensor.head())
-print("Dados da Estação:")
-display(df_estacao.head())
+df_sensor.head()
+df_estacao.head()
 
 # Etapa 3: Pré-processamento dos dados
 df_sensor['Datetime – utc'] = pd.to_datetime(df_sensor['Datetime – utc'], format='ISO8601', utc=True)
@@ -50,7 +48,7 @@ def index():
 
 @app.route('/analise')
 def analise():
-    # Restante do código da análise exploratória e visualização de gráficos
+    # Código da análise exploratória e visualização de gráficos...
     valid_columns = ['air_humidity_100', 'air_temperature_100', 'atm_pressure_main', 'num_of_resets', 'piezo_charge', 'piezo_temperature', 'chuva']
 
     if all(df_completo[col].notnull().any() for col in valid_columns):
