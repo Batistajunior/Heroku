@@ -46,7 +46,7 @@ df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], h
 def index():
     return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
 
-@app.route('/graficos')
+@app.route('/visualizar-graficos')
 def graficos():
     # Código da análise exploratória e visualização de gráficos...
     valid_columns = ['air_humidity_100', 'air_temperature_100', 'atm_pressure_main', 'num_of_resets', 'piezo_charge', 'piezo_temperature', 'chuva']
