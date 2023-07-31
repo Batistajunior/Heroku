@@ -8,6 +8,8 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
+from IPython.display import display
+
 
 import warnings
 warnings.filterwarnings("ignore")
