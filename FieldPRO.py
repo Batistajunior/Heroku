@@ -106,21 +106,17 @@ def treinamento():
     return f"Erro Médio Absoluto (MAE): {mae}<br>Erro Quadrático Médio (MSE): {mse}<br>Coeficiente de Determinação (R²): {r2}"
 
 
-@app.route('/')
+@app.route('/inicio')
 def index():
     return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
 
-@app.route('/analise')
-def analise():
+@app.route('/visualizar-graficos')
+def visualizar_graficos():
     # Etapa 1: Carregamento dos dados
     df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
     df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
-    # Etapa 2: Verificação dos dados
-    print("Dados do Sensor:")
-    display(df_sensor.head())
-    print("Dados da Estação:")
-    display(df_estacao.head())
+    
 
     # Etapa 3: Pré-processamento dos dados
     df_sensor['Datetime – utc'] = pd.to_datetime(df_sensor['Datetime – utc'], format='ISO8601', utc=True)
