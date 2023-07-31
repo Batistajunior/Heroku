@@ -1,1 +1,1 @@
-web: gunicorn FieldPRO:app
+web: gunicorn app.run():app
