@@ -42,7 +42,7 @@ df_estacao['Hora (Brasília)'] = pd.to_datetime(df_estacao['Hora (Brasília)'], 
 # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
 df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
 
-@app.route('/')
+@app.route('/inicio')
 def index():
     return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
 
