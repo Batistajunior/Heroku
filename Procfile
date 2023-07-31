@@ -1,1 +1,1 @@
-web: gurnicorn FieldPRO.py 
+web: gunicorn FieldPRO:app
