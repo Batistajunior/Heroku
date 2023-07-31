@@ -17,7 +17,6 @@ warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
 # DataFrame para armazenar os dados
 df_completo = None
 
@@ -106,7 +105,7 @@ def treinamento():
     # Exibindo as métricas do modelo e os dados de treinamento
     return f"Erro Médio Absoluto (MAE): {mae}<br>Erro Quadrático Médio (MSE): {mse}<br>Coeficiente de Determinação (R²): {r2}"
 
-=======
+
 @app.route('/')
 def index():
     return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
@@ -210,11 +209,11 @@ def analise():
 
     return f"Erro Médio Absoluto (MAE): {mae}<br>Erro Quadrático Médio (MSE): {mse}<br>Coeficiente de Determinação (R²): {r2}"
 
->>>>>>> dbd69438a188b0504a9c0ee027601dd68f80f213
+
 if __name__ == '__main__':
-<<<<<<< HEAD
+
     app.run()
  
-=======
+
     app.run() 
->>>>>>> f73fb4d62a4904b1ef24333133b9aaeaf24cb063
+
