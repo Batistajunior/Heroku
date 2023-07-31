@@ -8,6 +8,9 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
+import base64
+import io
+import matplotlib.pyplot as plt
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -30,64 +33,47 @@ def prepare_data():
     # Verificando quais colunas têm dados válidos para plotar os gráficos
     valid_columns = ['air_humidity_100', 'air_temperature_100', 'atm_pressure_main', 'num_of_resets', 'piezo_charge', 'piezo_temperature', 'chuva']
 
-    # Resto do código para a análise exploratória dos dados e visualização de gráficos...
+    # Visualizando a distribuição das variáveis e plotando os gráficos
+    fig, axes = plt.subplots(1, 7, figsize=(24, 5))
+    for i, col in enumerate(valid_columns):
+        sns.histplot(df_completo[col], bins=20, edgecolor='black', color='skyblue', alpha=0.8, ax=axes[i])
+        axes[i].set_title(col)
+    plt.tight_layout()
 
-    # Etapa 5: Preparação dos dados para treinamento do modelo
-    # Definindo as features e o target
-    features = ['air_humidity_100', 'air_temperature_100', 'atm_pressure_main', 'num_of_resets', 'piezo_charge', 'piezo_temperature']
-    target = 'chuva'
+    # Codificando o gráfico em formato de imagem para base64
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    graph_html = f'<img src="data:image/png;base64,{image_base64}" alt="Gráficos de Variáveis">'
 
-    # Removendo amostras com valores ausentes
-    df_completo.dropna(subset=features + [target], inplace=True)
+    # Verificando a correlação entre as variáveis numéricas
+    correlation_matrix = df_completo[valid_columns].corr()
 
-    # Separando os dados em features (X) e target (y)
-    X = df_completo[features]
-    y = df_completo[target]
+    # Plotando a matriz de correlação
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=1, linecolor='black', annot_kws={"size": 10})
+    plt.xticks(rotation=45, ha='right')
+    plt.yticks(rotation=0)
+    plt.title('Matriz de Correlação', fontsize=14)
 
-    # Dividindo os dados em conjuntos de treino e teste
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Codificando o gráfico de matriz de correlação em formato de imagem para base64
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_base64_corr = base64.b64encode(buffer.getvalue()).decode()
+    corr_graph_html = f'<img src="data:image/png;base64,{image_base64_corr}" alt="Matriz de Correlação">'
 
-    # Preenchendo valores ausentes com a média
-    imputer = SimpleImputer(strategy='mean')
-    X_train_filled = imputer.fit_transform(X_train)
-    X_test_filled = imputer.transform(X_test)
-
-    # Retornando os dados preparados e o df_completo
-    return df_completo, X_train_filled, X_test_filled, y_train, y_test
+    return df_completo, graph_html, corr_graph_html
 
 def train_model():
-    # Obtendo os dados preparados
-    df_completo, X_train_filled, X_test_filled, y_train, y_test = prepare_data()
+    # Resto do código para treinamento do modelo...
 
-    # Etapa 6: Treinamento e avaliação do modelo
-    # Criando e treinando o modelo de regressão com HistGradientBoostingRegressor
-    model = HistGradientBoostingRegressor()
-    model.fit(X_train_filled, y_train)
-
-    # Realizando as previsões no conjunto de teste
-    y_pred = model.predict(X_test_filled)
-
-    # Avaliando o desempenho do modelo
-    mae = mean_absolute_error(y_test, y_pred)
-    mse = mean_squared_error(y_test, y_pred)
-    r2 = r2_score(y_test, y_pred)
-
-    # Salvando o modelo treinado
-    modelo_treinado_path = "modelo_treinado.joblib"
-    joblib.dump(model, modelo_treinado_path)
-
-    # Retornando as métricas do modelo
-    return mae, mse, r2
-
-@app.route('/analise')
-def analise():
-    # Obtendo o df_sensor para a análise e visualização de gráficos
-    df_completo, _, _, _, _ = prepare_data()
-
-    # Resto do código para a análise de dados e visualização de gráficos...
-
-    # Exemplo de visualização do DataFrame df_sensor:
-    return df_completo.head().to_html()
+ @app.route('/analise')
+ def analise():
+    df_completo, graph_html, corr_graph_html = prepare_data()
+    # Exemplo de visualização do DataFrame df_sensor e dos gráficos na página HTML
+    return f"{df_completo.head().to_html()}<br>{graph_html}<br>{corr_graph_html}"
 
 @app.route('/treinamento')
 def treinamento():
