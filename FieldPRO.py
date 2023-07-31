@@ -212,4 +212,4 @@ def analise():
 
 >>>>>>> dbd69438a188b0504a9c0ee027601dd68f80f213
 if __name__ == '__main__':
-    app.run()
+    app.run() 
