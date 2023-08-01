@@ -35,7 +35,7 @@ def prepare_data():
         # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
         df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
 
-    # Resto do código para a análise exploratória dos dados e visualização de gráficos...
+   
 
     return df_completo
 
@@ -44,7 +44,7 @@ def analise():
     # Obtendo o df_sensor para a análise e visualização de gráficos
     df_completo = prepare_data()
 
-    # Resto do código para a análise de dados e visualização de gráficos...
+    
 
     # Exemplo de visualização do DataFrame df_completo:
     return df_completo.head().to_html()
@@ -111,7 +111,7 @@ def visualizar_graficos():
     df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
     df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
-    # Restante do código para visualização de gráficos...
+   
 
     return "Gráficos visualizados com sucesso!"
 
