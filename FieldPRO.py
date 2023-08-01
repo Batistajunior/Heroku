@@ -29,12 +29,12 @@ def prepare_data():
 
 @app.route('/visualizar-graficos')
 def visualizar_graficos():
-    # Etapa 1: Carregamento dos dados
-    df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
-    df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
+    global df_completo
 
-    # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
-    df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
+    # Verificar se o DataFrame df_completo está carregado
+    if df_completo is None:
+        # Se não estiver carregado, chamar a função prepare_data() para carregar os dados
+        df_completo = prepare_data()
 
     # Etapa 2: Visualização de gráficos
     # Exemplo de criação de gráfico de chuva ao longo do tempo
@@ -73,7 +73,6 @@ def visualizar_graficos():
 
     # Renderizar o template HTML com os gráficos
     return render_template('visualizar_graficos.html', plot_data=plot_data, correlation_plot_data=correlation_plot_data)
-
 
 if __name__ == '__main__':
     import os
