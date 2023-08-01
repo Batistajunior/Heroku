@@ -10,7 +10,6 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
 import base64
 import io
-import matplotlib.pyplot as plt
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -21,7 +20,7 @@ app = Flask(__name__)
 df_completo = None
 
 @app.route('/')
-def index():
+def index_inicio():
     return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
 
 def prepare_data():
@@ -35,8 +34,6 @@ def prepare_data():
         # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
         df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
 
-   
-
     return df_completo
 
 @app.route('/analise')
@@ -44,10 +41,22 @@ def analise():
     # Obtendo o df_sensor para a análise e visualização de gráficos
     df_completo = prepare_data()
 
-    
+    # Exemplo de criação de gráficos
+    plt.figure(figsize=(10, 6))
+    sns.histplot(df_completo['chuva'], kde=True)
+    plt.title('Distribuição dos dados de chuva')
+    plt.xlabel('Chuva')
+    plt.ylabel('Contagem')
+    plt.tight_layout()
 
-    # Exemplo de visualização do DataFrame df_completo:
-    return df_completo.head().to_html()
+    # Salvar o gráfico em um buffer de bytes para inserir no template HTML
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plot_data = base64.b64encode(buffer.read()).decode()
+
+    # Renderizar o template HTML com o gráfico
+    return render_template('analise.html', plot_data=plot_data)
 
 def train_model():
     # Obtendo os dados preparados
@@ -111,7 +120,7 @@ def visualizar_graficos():
     df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
     df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
-   
+    # Restante da sua lógica para visualização de gráficos...
 
     return "Gráficos visualizados com sucesso!"
 
@@ -119,3 +128,4 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+
