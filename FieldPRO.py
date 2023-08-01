@@ -19,7 +19,7 @@ def prepare_data():
 
     # Carrega os DataFrames df_sensor e df_estacao, se ainda não foram carregados
     if df_completo is None:
-        df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
+        df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/df_sensor.csv')
         df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
         # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
