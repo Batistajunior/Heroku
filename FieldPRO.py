@@ -110,9 +110,7 @@ def treinamento():
     # Exibindo as métricas do modelo e os dados de treinamento
     return f"Erro Médio Absoluto (MAE): {mae}<br>Erro Quadrático Médio (MSE): {mse}<br>Coeficiente de Determinação (R²): {r2}"
 
-@app.route('/inicio')
-def index():
-    return 'Bem-vindo ao meu aplicativo Flask no Heroku!'
+
 
 @app.route('/visualizar-graficos')
 def visualizar_graficos():
