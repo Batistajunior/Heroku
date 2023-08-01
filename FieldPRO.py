@@ -19,8 +19,8 @@ def prepare_data():
 
     # Carrega os DataFrames df_sensor e df_estacao, se ainda não foram carregados
     if df_completo is None:
-        df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Sensor_FieldPRO.csv')
-        df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Estacao_Convencional.csv')
+        df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
+        df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
         # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
         df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
@@ -30,8 +30,8 @@ def prepare_data():
 @app.route('/visualizar-graficos')
 def visualizar_graficos():
     # Etapa 1: Carregamento dos dados
-    df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Sensor_FieldPRO.csv')
-    df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Estacao_Convencional.csv')
+    df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Sensor_FieldPRO.csv')
+    df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/Heroku/main/Estacao_Convencional.csv')
 
     # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
     df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
