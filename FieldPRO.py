@@ -27,7 +27,7 @@ def prepare_data():
 
     return df_completo
 
-@app.route('/visualizar-graficos')
+@app.route('/visualizar_graficos')
 def visualizar_graficos():
     global df_completo
 
