@@ -27,18 +27,23 @@ def prepare_data():
 
     return df_completo
 
-@app.route('/analise')
-def analise():
-    # Obtendo o df_sensor para a análise e visualização de gráficos
-    df_completo = prepare_data()
+@app.route('/visualizar-graficos')
+def visualizar_graficos():
+    # Etapa 1: Carregamento dos dados
+    df_sensor = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Sensor_FieldPRO.csv')
+    df_estacao = pd.read_csv('https://raw.githubusercontent.com/Batistajunior/desafio-de-dados-fieldpro/main/Estacao_Convencional.csv')
 
-    # Exemplo de criação de gráficos
+    # Juntando os DataFrames df_sensor e df_estacao com base nas colunas 'data' e 'Hora (Brasília)'
+    df_completo = pd.merge(df_sensor, df_estacao, on=['data', 'Hora (Brasília)'], how='inner')
+
+    # Etapa 2: Visualização de gráficos
+    # Exemplo de criação de gráfico de chuva ao longo do tempo
     plt.figure(figsize=(10, 6))
-    sns.histplot(df_completo['chuva'], kde=True)
-    plt.title('Distribuição dos dados de chuva')
-    plt.xlabel('Chuva')
-    plt.ylabel('Contagem')
-    plt.tight_layout()
+    plt.plot(df_completo['data'], df_completo['chuva'], label='Chuva')
+    plt.xlabel('Data')
+    plt.ylabel('Chuva')
+    plt.title('Gráfico de Chuva ao longo do tempo')
+    plt.legend()
 
     # Salvar o gráfico em um buffer de bytes para inserir no template HTML
     buffer = io.BytesIO()
@@ -66,8 +71,9 @@ def analise():
     correlation_plot_data = base64.b64encode(buffer.read()).decode()
     plt.close()
 
-    # Renderizar o template HTML com os gráficos e a matriz de correlação
+    # Renderizar o template HTML com os gráficos
     return render_template('visualizar_graficos.html', plot_data=plot_data, correlation_plot_data=correlation_plot_data)
+
 
 if __name__ == '__main__':
     import os
