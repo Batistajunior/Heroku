@@ -7,7 +7,7 @@ Requisitos
 Antes de executar o projeto, certifique-se de ter as seguintes bibliotecas instaladas:
 
 pandas
-matplotlib
+matplotlib 
 seaborn
 scikit-learn
 joblib
