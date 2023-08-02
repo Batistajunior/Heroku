@@ -25,4 +25,4 @@ seaborn==0.11.2
 six==1.16.0
 threadpoolctl==2.2.0
 tzdata==2021.5
-Werkzeug==2.1.5
+Werkzeug==2.2.3
