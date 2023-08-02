@@ -43,7 +43,7 @@ python3 FieldPRO.py
 
 
 Acesse o aplicativo no navegador:
-Abra o navegador e acesse http://localhost:5000 para visualizar o aplicativo web.
+Abra o navegador e acesse http://127.0.0.1:8050/ para visualizar o aplicativo web.
 
 Notebook de Análise e Treinamento
 
