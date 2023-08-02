@@ -1,11 +1,9 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import dash
-from dash import dcc
-from dash import html
+from dash import dcc, html
 from dash.dependencies import Input, Output
+import plotly.graph_objects as go
+import plotly.express as px
 from sklearn.model_selection import train_test_split
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingRegressor
@@ -30,12 +28,10 @@ valid_columns = ['air_humidity_100', 'air_temperature_100', 'atm_pressure_main',
 # Verificando se há alguma coluna com dados válidos para plotar os gráficos
 if all(df_completo[col].notnull().any() for col in valid_columns):
     # Visualizando a distribuição das variáveis e plotando os gráficos
-    fig_hist = plt.figure(figsize=(24, 5))
-    for i, col in enumerate(valid_columns):
-        plt.subplot(1, 7, i+1)
-        sns.histplot(df_completo[col], bins=20, edgecolor='black', color='skyblue', alpha=0.8)
-        plt.title(col)
-    plt.tight_layout()
+    fig_hist = go.Figure()
+    for col in valid_columns:
+        fig_hist.add_trace(go.Histogram(x=df_completo[col], nbinsx=20, name=col))
+    fig_hist.update_layout(title='Distribuição das Variáveis', barmode='overlay', xaxis_title='Valor', yaxis_title='Contagem')
 
     # Verificando a correlação entre as variáveis numéricas
     correlation_matrix = df_completo[valid_columns].corr()
