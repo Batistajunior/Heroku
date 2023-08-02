@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 from dash.dependencies import Input, Output
 from sklearn.model_selection import train_test_split
 from sklearn.experimental import enable_hist_gradient_boosting
