@@ -59,13 +59,9 @@ https://seu-aplicativo-heroku.herokuapp.com
 
 Observações
 
-Observações
 
-Este projeto é apenas uma demonstração de como realizar análise de dados e criar um modelo de previsão de chuvas. Ele pode ser adaptado e aprimorado para outros cenários e dados.
-Os dados utilizados neste projeto são fictícios e foram gerados para fins de demonstração.
 Para fazer o deploy do aplicativo no Heroku, foram seguidos os passos descritos no README. Certifique-se de ter a conta no Heroku e as dependências corretas instaladas.
-O aplicativo pode ser acessado publicamente pelo link fornecido no deploy no Heroku. Certifique-se de não compartilhar informações confidenciais no aplicativo.
-Créditos
+O aplicativo pode ser acessado publicamente pelo link fornecido no deploy no Heroku. 
 
 Este Desafio foi desenvolvido por Batistajunior.
 
